@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="loginMapper">
+
+    <select id="login" parameterType="Map" resultType="Map">
+        SELECT
+            a.empno        AS epCode,
+            a.epname       AS epName,
+            a.dept_code as teamCode,
+            b.dept_name as teamName,
+            c.dept_code as busuCode,
+            c.dept_name as busuName
+
+        FROM thb01 a
+            left outer join thb02_d b on a.dept_code = b.dept_code
+            left outer join thb02_d c on b.parent_code = c.dept_code
+        WHERE isnull(a.outdate,'') = ''
+            and a.empno = #{epCode}
+            and master.dbo.crypto_dec('normal', a.pwd) = #{passWord}
+
+        union all
+
+        SELECT
+            '9999999'		epCode
+            , '관리자'		epName
+            , '관리팀'		teamCode
+            , '관리팀'		teamName
+            , '관리부'		busuCode
+            , '관리부'		busuName
+        FROM Master_ID
+        WHERE USER_ID = #{epCode} AND Password = #{passWord}
+    </select>
+
+</mapper>
