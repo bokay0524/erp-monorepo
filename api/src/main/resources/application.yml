@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://IPAddress:1433;databaseName=BIZXR_SF_TEST;encrypt=true;trustServerCertificate=true
+    url: jdbc:sqlserver://192.168.1.27:1433;databaseName=BIZXR_SF_TEST;encrypt=true;trustServerCertificate=true
     username: sa
-    password: pwd
+    password: bizxr12!@
 
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml
